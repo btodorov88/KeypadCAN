@@ -35,17 +35,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_rnglists 00000818  00000000  00000000  0000f818  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00016c6e  00000000  00000000  00010030  2**0
+ 16 .debug_macro  00016c7a  00000000  00000000  00010030  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000ad0d  00000000  00000000  00026c9e  2**0
+ 17 .debug_line   0000ad0d  00000000  00000000  00026caa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00086c36  00000000  00000000  000319ab  2**0
+ 18 .debug_str    00086c4d  00000000  00000000  000319b7  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b85e1  2**0
+ 19 .comment      00000043  00000000  00000000  000b8604  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002bcc  00000000  00000000  000b8624  2**2
+ 20 .debug_frame  00002bcc  00000000  00000000  000b8648  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000065  00000000  00000000  000bb1f0  2**0
+ 21 .debug_line_str 00000065  00000000  00000000  000bb214  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -305,19 +305,17 @@ static void MX_CAN_Init(void)
     Error_Handler();
  800026e:	f000 f97b 	bl	8000568 <Error_Handler>
   }
-
-	/*##-3- Start the CAN peripheral ###########################################*/
-	if (HAL_CAN_Start(&hcan) != HAL_OK){
+  /* USER CODE BEGIN CAN_Init 2 */
+  if (HAL_CAN_Start(&hcan) != HAL_OK){
  8000272:	4805      	ldr	r0, [pc, #20]	@ (8000288 <MX_CAN_Init+0x74>)
  8000274:	f000 fc03 	bl	8000a7e <HAL_CAN_Start>
  8000278:	4603      	mov	r3, r0
  800027a:	2b00      	cmp	r3, #0
  800027c:	d001      	beq.n	8000282 <MX_CAN_Init+0x6e>
-		/* Start Error */
-		Error_Handler();
+	/* Start Error */
+	Error_Handler();
  800027e:	f000 f973 	bl	8000568 <Error_Handler>
-	}
-
+  }
   /* USER CODE END CAN_Init 2 */
 
 }
@@ -616,15 +614,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
  800044e:	4b3f      	ldr	r3, [pc, #252]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  8000450:	2200      	movs	r2, #0
  8000452:	609a      	str	r2, [r3, #8]
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
  8000454:	4b3d      	ldr	r3, [pc, #244]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
- 8000456:	f240 1223 	movw	r2, #291	@ 0x123
+ 8000456:	f240 7226 	movw	r2, #1830	@ 0x726
  800045a:	601a      	str	r2, [r3, #0]
 		TxHeader.RTR = CAN_RTR_DATA;
  800045c:	4b3b      	ldr	r3, [pc, #236]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  800045e:	2200      	movs	r2, #0
  8000460:	60da      	str	r2, [r3, #12]
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
  8000462:	4b3a      	ldr	r3, [pc, #232]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  8000464:	2202      	movs	r2, #2
  8000466:	611a      	str	r2, [r3, #16]
@@ -671,15 +669,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
  80004a6:	4b29      	ldr	r3, [pc, #164]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  80004a8:	2200      	movs	r2, #0
  80004aa:	609a      	str	r2, [r3, #8]
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
  80004ac:	4b27      	ldr	r3, [pc, #156]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
- 80004ae:	f240 1223 	movw	r2, #291	@ 0x123
+ 80004ae:	f240 7226 	movw	r2, #1830	@ 0x726
  80004b2:	601a      	str	r2, [r3, #0]
 		TxHeader.RTR = CAN_RTR_DATA;
  80004b4:	4b25      	ldr	r3, [pc, #148]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  80004b6:	2200      	movs	r2, #0
  80004b8:	60da      	str	r2, [r3, #12]
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
  80004ba:	4b24      	ldr	r3, [pc, #144]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  80004bc:	2202      	movs	r2, #2
  80004be:	611a      	str	r2, [r3, #16]
@@ -726,15 +724,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
  80004fe:	4b13      	ldr	r3, [pc, #76]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  8000500:	2200      	movs	r2, #0
  8000502:	609a      	str	r2, [r3, #8]
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
  8000504:	4b11      	ldr	r3, [pc, #68]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
- 8000506:	f240 1223 	movw	r2, #291	@ 0x123
+ 8000506:	f240 7226 	movw	r2, #1830	@ 0x726
  800050a:	601a      	str	r2, [r3, #0]
 		TxHeader.RTR = CAN_RTR_DATA;
  800050c:	4b0f      	ldr	r3, [pc, #60]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  800050e:	2200      	movs	r2, #0
  8000510:	60da      	str	r2, [r3, #12]
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
  8000512:	4b0e      	ldr	r3, [pc, #56]	@ (800054c <HAL_TIM_PeriodElapsedCallback+0x120>)
  8000514:	2202      	movs	r2, #2
  8000516:	611a      	str	r2, [r3, #16]

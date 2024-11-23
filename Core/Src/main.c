@@ -31,7 +31,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define CAN_ID 0x726
+#define CAN_DLC 2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -187,13 +188,11 @@ static void MX_CAN_Init(void)
   {
     Error_Handler();
   }
-
-	/*##-3- Start the CAN peripheral ###########################################*/
-	if (HAL_CAN_Start(&hcan) != HAL_OK){
-		/* Start Error */
-		Error_Handler();
-	}
-
+  /* USER CODE BEGIN CAN_Init 2 */
+  if (HAL_CAN_Start(&hcan) != HAL_OK){
+	/* Start Error */
+	Error_Handler();
+  }
   /* USER CODE END CAN_Init 2 */
 
 }
@@ -298,9 +297,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     GPIO_PinState btn1_state = HAL_GPIO_ReadPin(BTN_1_GPIO_Port, BTN_1_Pin);
     if(btn1SwitchState == 1 && !btn1_state){
     	TxHeader.IDE = CAN_ID_STD;
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
 		TxHeader.RTR = CAN_RTR_DATA;
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
 
 		TxData[0] = 0x01;
 
@@ -314,9 +313,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     GPIO_PinState btn2_state = HAL_GPIO_ReadPin(BTN_2_GPIO_Port, BTN_2_Pin);
     if(btn2SwitchState == 1 && !btn2_state){
     	TxHeader.IDE = CAN_ID_STD;
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
 		TxHeader.RTR = CAN_RTR_DATA;
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
 
 		TxData[0] = 0x02;
 
@@ -330,9 +329,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     GPIO_PinState btn3_state = HAL_GPIO_ReadPin(BTN_3_GPIO_Port, BTN_3_Pin);
     if(btn3SwitchState == 1 && !btn3_state){
     	TxHeader.IDE = CAN_ID_STD;
-		TxHeader.StdId = 0x123;
+		TxHeader.StdId = CAN_ID;
 		TxHeader.RTR = CAN_RTR_DATA;
-		TxHeader.DLC = 2;
+		TxHeader.DLC = CAN_DLC;
 
 		TxData[0] = 0x03;
 
